@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Welcome!",
+        "description": "Get the 'Achievements' extention",
+        "condition": "Download the Achiements extention"
+    },
+    {
+        "name": "Life Completed",
+        "description": "Start coding in assembler and decide to move in a lonely hut somewhere in Canada",
+        "condition": "Create an .asm file"
+    },
+    {
+        "name": "The holy Trinity",
+        "description": "Start projects in Vue, React and Angular",
+        "condition": "Create Import Vue + React + Angular in different Javascript files"
+    },
+    {
+        "name": "'Did you know that I use Vim?'",
+        "description": "Get the 'Vim' extention and tell everyone about it.",
+        "condition": "Download the Vim extention"
+    }
+]
