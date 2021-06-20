@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { getNonce } from "./getNonce";
 
 export class AchievementPanel {
     /**
@@ -27,7 +28,7 @@ export class AchievementPanel {
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(
             AchievementPanel.viewType,
-            "VSinder",
+            "Achievements",
             column || vscode.ViewColumn.One,
             {
                 // Enable javascript in the webview
@@ -143,33 +144,25 @@ export class AchievementPanel {
         // );
 
         // Use a nonce to only allow specific scripts to be run
-        //const nonce = getNonce();
+        const nonce = getNonce();
 
         return `<!DOCTYPE html>
-			<html lang="en">
-			<head>
+			    <html lang="en">
+			    <head>
 				<meta charset="UTF-8">
 				<!--
 					Use a content security policy to only allow loading images from https or from our extension directory,
 					and only allow scripts that have a specific nonce.
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src ${apiBaseUrl}; img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource
+                -->
+                <meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource
             }; script-src 'nonce-${nonce}';">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<link href="${stylesResetUri}" rel="stylesheet">
-				<link href="${stylesMainUri}" rel="stylesheet">
-        <link href="${cssUri}" rel="stylesheet">
-        <script nonce="${nonce}">
-            const apiBaseUrl = ${JSON.stringify(apiBaseUrl)};
-            const tsvscode = acquireVsCodeApi();
-            let accessToken = ${JSON.stringify(Util.getAccessToken())};
-            let refreshToken = ${JSON.stringify(Util.getRefreshToken())};
-            ${FlairProvider.getJavascriptMapString()}
-        </script>
-			</head>
-      <body>
-			</body>
-				<script nonce="${nonce}" src="${scriptUri}"></script>
-			</html>`;
+                <script nonce="${nonce}">
+                </script>
+			    </head>
+                <body>
+                <h1>Just Imagine you are seeing your achievements right here!</h1>
+                </body>
+			    </html>`;
     }
 }

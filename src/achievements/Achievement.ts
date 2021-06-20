@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { AchievementPanel } from '../Panel/AchievementPanel';
 
 export class Achievement {
     name!: string;
@@ -15,14 +16,14 @@ export class Achievement {
         this.checkCondition = checkCondition;
     }
 
-    async finished(): Promise<void> {
+    async finished(context: vscode.ExtensionContext): Promise<void> {
         this.done = true;
         let answer = await vscode.window.showInformationMessage(
             `Achievement unlocked!\t${this.name}`,
             "show"
         );
         if (answer === "show") {
-
+            AchievementPanel.createOrShow(context.extensionUri);
         }
     }
 }

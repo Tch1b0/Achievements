@@ -5,8 +5,8 @@ export function getAchievements(): Array<Achievement> {
     return [
         new Achievement(
             "Welcome!",
-            "Thank you for downloading the Achievements extention!",
-            "Download the Achievements extention",
+            "Thank you for downloading the Achievements extension!",
+            "Download the Achievements extension",
             false,
             (_user: User) => {
                 return true;
