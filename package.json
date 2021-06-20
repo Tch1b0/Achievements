@@ -19,11 +19,6 @@
 				"command": "achievements.achievements",
 				"category": "Achievements",
 				"title": "achievements"
-			},
-			{
-				"command": "achievements.info",
-				"category": "Achievements",
-				"title": "info"
 			}
 		]
 	},

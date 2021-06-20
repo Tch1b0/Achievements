@@ -1,0 +1,9 @@
+.achievements {
+    font-size: 125%;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 44%;
+    left: 44%;
+}

@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+import { Achievement } from "../achievements/Achievement";
+import { getAchievements } from "../achievements/achievements";
 import { getNonce } from "./getNonce";
 
 export class AchievementPanel {
@@ -13,7 +15,7 @@ export class AchievementPanel {
     private readonly _extensionUri: vscode.Uri;
     private _disposables: vscode.Disposable[] = [];
 
-    public static createOrShow(extensionUri: vscode.Uri) {
+    public static createOrShow(extensionUri: vscode.Uri, achievements: Array<Achievement>) {
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
             : undefined;
@@ -21,7 +23,7 @@ export class AchievementPanel {
         // If we already have a panel, show it.
         if (AchievementPanel.currentPanel) {
             AchievementPanel.currentPanel._panel.reveal(column);
-            AchievementPanel.currentPanel._update();
+            AchievementPanel.currentPanel._update(achievements);
             return;
         }
 
@@ -42,7 +44,7 @@ export class AchievementPanel {
             }
         );
 
-        AchievementPanel.currentPanel = new AchievementPanel(panel, extensionUri);
+        AchievementPanel.currentPanel = new AchievementPanel(panel, extensionUri, achievements);
     }
 
     public static kill() {
@@ -50,16 +52,15 @@ export class AchievementPanel {
         AchievementPanel.currentPanel = undefined;
     }
 
-    public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
-        AchievementPanel.currentPanel = new AchievementPanel(panel, extensionUri);
+    public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, achievements: Array<Achievement>) {
+        AchievementPanel.currentPanel = new AchievementPanel(panel, extensionUri, achievements);
     }
 
-    private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
+    private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, achievements: Array<Achievement>) {
         this._panel = panel;
         this._extensionUri = extensionUri;
-
         // Set the webview's initial html content
-        this._update();
+        this._update(achievements);
 
         // Listen for when the panel is disposed
         // This happens when the user closes the panel or when the panel is closed programatically
@@ -93,10 +94,10 @@ export class AchievementPanel {
         }
     }
 
-    private async _update() {
+    private async _update(achievements: Array<Achievement>) {
         const webview = this._panel.webview;
 
-        this._panel.webview.html = this._getHtmlForWebview(webview);
+        this._panel.webview.html = this._getHtmlForWebview(webview, achievements);
         webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
 
@@ -118,7 +119,7 @@ export class AchievementPanel {
         });
     }
 
-    private _getHtmlForWebview(webview: vscode.Webview) {
+    private _getHtmlForWebview(webview: vscode.Webview, achievements: Array<Achievement>) {
         // // // And the uri we use to load this script in the webview
         // const scriptUri = webview.asWebviewUri(
         //     vscode.Uri.joinPath(this._extensionUri, "out", "compiled/swiper.js")
@@ -136,15 +137,30 @@ export class AchievementPanel {
             "vscode.css"
         );
 
-        // // Uri to load styles into webview
-        // const stylesResetUri = webview.asWebviewUri(styleResetPath);
-        // const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
-        // const cssUri = webview.asWebviewUri(
-        //     vscode.Uri.joinPath(this._extensionUri, "out", "compiled/swiper.css")
-        // );
+        const style = vscode.Uri.joinPath(
+            this._extensionUri,
+            "media",
+            "style.css"
+        );
 
-        // Use a nonce to only allow specific scripts to be run
+        const script = vscode.Uri.joinPath(
+            this._extensionUri,
+            "media",
+            "script.js"
+        );
+
+        const styleUri = webview.asWebviewUri(style);
+        const stylesResetUri = webview.asWebviewUri(styleResetPath);
+        const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
+        const scriptUri = webview.asWebviewUri(script);
+
         const nonce = getNonce();
+
+        let achievementsInText = "";
+        for (let i = 0; i < achievements.length; i++) {
+            let a = achievements[i];
+            achievementsInText += `<p class="achievement">${a.done ? "✔️" : "❌"}&emsp;<b>${a.name}</b>${a.done ? "&emsp;-&emsp;" + a.description : ""}</p><br>`;
+        }
 
         return `<!DOCTYPE html>
 			    <html lang="en">
@@ -156,13 +172,20 @@ export class AchievementPanel {
                 -->
                 <meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource
             }; script-src 'nonce-${nonce}';">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <script src="${scriptUri}"></script>
+                <link rel="stylesheet" href="${styleUri}">
+                <link rel="stylesheet" href="${stylesResetUri}">
+                <link rel="stylesheet" href="${stylesMainUri}">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <script nonce="${nonce}">
                 </script>
 			    </head>
                 <body>
-                <h1>Just Imagine you are seeing your achievements right here!</h1>
+                    <h1 align="center">Achievements</h1>
+                    <br><br>
+                    <div class="achievements">${achievementsInText}</div>
                 </body>
+                <footer id="footer" align="center">If you want to support me, you can <a href="https://www.buymeacoffee.com/Tchibo">buy me a coffee</a> ☕ <br></footer>
 			    </html>`;
     }
 }

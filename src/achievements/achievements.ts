@@ -13,12 +13,35 @@ export function getAchievements(): Array<Achievement> {
             }
         ),
         new Achievement(
-            "Life Completed",
-            "Start working on assembler projects and move to a lonely hut somewhere in Canada",
-            "Create a .asm file",
+            "Bye Friends",
+            "Start working on assembly projects and move to a lonely hut somewhere in Canada",
+            "Create a assembly file",
             false,
             (user: User) => {
-                return user.filesCreated.includes("asm");
+                return user.filesCreated.includes(".asm");
+            }
+        ),
+        new Achievement(
+            "Keep it simple",
+            "Work with beginner friendly programming languages",
+            "Create a python, ruby and html file",
+            false,
+            (user: User) => {
+                return user.filesCreated.includes(".html") && user.filesCreated.includes(".py") && user.filesCreated.includes(".rb");
+            }
+        ),
+        new Achievement(
+            "Not your storage",
+            "These npm packages really require lots of space",
+            "Delete a node_modules directory",
+            false,
+            (user: User) => {
+                for (let i = 0; i < user.filesDeleted.length; i++) {
+                    if (user.filesDeleted[i].endsWith("node_modules")) {
+                        return true;
+                    }
+                }
+                return false;
             }
         )
     ];

@@ -16,14 +16,14 @@ export class Achievement {
         this.checkCondition = checkCondition;
     }
 
-    async finished(context: vscode.ExtensionContext): Promise<void> {
+    async finished(context: vscode.ExtensionContext, achievements: Array<Achievement>): Promise<void> {
         this.done = true;
         let answer = await vscode.window.showInformationMessage(
-            `Achievement unlocked!\t${this.name}`,
-            "show"
+            `✔ ${this.name}`,
+            "Show Achievements"
         );
-        if (answer === "show") {
-            AchievementPanel.createOrShow(context.extensionUri);
+        if (answer === "Show Achievements") {
+            AchievementPanel.createOrShow(context.extensionUri, achievements);
         }
     }
 }

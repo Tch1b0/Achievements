@@ -1,4 +1,4 @@
-export function getExtention(name: string): string {
-    let splittedString = name.split(".");
-    return splittedString[splittedString.length - 1];
+export function getPart(name: string, splitter: string): string {
+    let splittedString = name.split(splitter);
+    return splitter + splittedString[splittedString.length - 1];
 }
