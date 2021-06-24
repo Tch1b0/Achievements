@@ -6,6 +6,7 @@ export class Achievement {
     description!: string;
     condition!: string;
     done!: boolean;
+    fresh!: boolean;
     checkCondition!: any;
 
     constructor(name: string, description: string, condition: string, done: boolean, checkCondition: any) {
@@ -18,6 +19,7 @@ export class Achievement {
 
     async finished(context: vscode.ExtensionContext, achievements: Array<Achievement>): Promise<void> {
         this.done = true;
+        this.fresh = true;
         let answer = await vscode.window.showInformationMessage(
             `✔ ${this.name}`,
             "Show Achievements"

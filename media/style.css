@@ -7,3 +7,73 @@ footer {
     right: 44%;
     left: 44%;
 }
+
+.firework {
+    position: relative;
+    margin-left: 0.6%;
+}
+
+.explode {
+    position: absolute;
+    margin-top: -0.6%;
+    width: 2px;
+    height: 20px;
+    transform-origin: 50% 100%;
+    overflow: hidden;
+}
+.explode:nth-child(1) {
+    transform: rotate(0deg) translateY(-15px);
+}
+.explode:nth-child(2) {
+    transform: rotate(30deg) translateY(-15px);
+}
+.explode:nth-child(3) {
+    transform: rotate(60deg) translateY(-15px);
+}
+.explode:nth-child(4) {
+    transform: rotate(90deg) translateY(-15px);
+}
+.explode:nth-child(5) {
+    transform: rotate(120deg) translateY(-15px);
+}
+.explode:nth-child(6) {
+    transform: rotate(150deg) translateY(-15px);
+}
+.explode:nth-child(7) {
+    transform: rotate(180deg) translateY(-15px);
+}
+.explode:nth-child(8) {
+    transform: rotate(210deg) translateY(-15px);
+}
+.explode:nth-child(9) {
+    transform: rotate(240deg) translateY(-15px);
+}
+.explode:nth-child(10) {
+    transform: rotate(270deg) translateY(-15px);
+}
+.explode:nth-child(11) {
+    transform: rotate(300deg) translateY(-15px);
+}
+.explode:nth-child(12) {
+    transform: rotate(330deg) translateY(-15px);
+}
+
+.explode::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    right: 0;
+    height: 10px;
+    background-color: rgb(230, 226, 40);
+    animation: explode 3s ease-in-out;
+}
+
+@keyframes explode {
+    0% {
+        top: 100%;
+    }
+    33%, 100% {
+        top: -50%;
+    }
+}

@@ -157,9 +157,24 @@ export class AchievementPanel {
         const nonce = getNonce();
 
         let achievementsInText = "";
+        let explosion = `<div class="firework">
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        </div>`;
         for (let i = 0; i < achievements.length; i++) {
             let a = achievements[i];
-            achievementsInText += `<p class="achievement">${a.done ? "✔️" : "❌"}&emsp;<b>${a.name}</b>${a.done ? "&emsp;-&emsp;" + a.description : ""}</p><br>`;
+            achievementsInText += `<p class="achievement">${a.fresh ? explosion : ""}${a.done ? "✔️" : "❌"}&emsp;<b>${a.name}</b>${a.done ? "&emsp;-&emsp;" + a.description : ""}</p><br>`;
+            achievements[i].fresh = false;
         }
 
         return `<!DOCTYPE html>
