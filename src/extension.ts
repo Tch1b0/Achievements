@@ -16,6 +16,12 @@ export function activate(context: vscode.ExtensionContext) {
 		);
 		checkForCompletion(user, achievements, context);
 	});
+	watcher.onDidChange((e) => {
+		user.filesChanged.push(
+			getPart(e.fsPath, e.fsPath.includes(".") ? "." : "/")
+		);
+		checkForCompletion(user, achievements, context);
+	});
 	watcher.onDidDelete((e) => {
 		user.filesDeleted.push(
 			getPart(e.fsPath, e.fsPath.includes(".") ? "." : "/")

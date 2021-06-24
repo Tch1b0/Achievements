@@ -7,10 +7,6 @@ hr {
     width: 33.3%;
     animation: hr 75s ease-in-out;
 }
-@keyframes hr {
-    from {width: 33%;}
-    to {width: 100%;}
-}
 
 .achievements {
     font-size: 125%;

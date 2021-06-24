@@ -17,8 +17,7 @@
 		"commands": [
 			{
 				"command": "achievements.achievements",
-				"category": "Achievements",
-				"title": "achievements"
+				"title": "Achievements"
 			}
 		]
 	},
