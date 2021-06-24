@@ -1,12 +1,42 @@
+/* Top of the page */
+
+#heading {
+    font-family: sans-serif;
+}
+hr {
+    width: 33.3%;
+    animation: hr 75s ease-in-out;
+}
+@keyframes hr {
+    from {width: 33%;}
+    to {width: 100%;}
+}
+
 .achievements {
     font-size: 125%;
 }
+.accomplishedAchievements {
+    font-family: monospace;
+    font-size: 130%;
+}
+
+
+/* The count of the accomplished and all available achievements */
+.count✔️ {
+    color: rgb(44, 230, 59);
+}
+.countAll { 
+    color: white;
+}
+
 footer {
     position: fixed;
     bottom: 0;
     right: 44%;
     left: 44%;
 }
+
+/* Down here are the 'explode' animations */
 
 .firework {
     position: relative;
