@@ -43,6 +43,15 @@ export function getAchievements(): Array<Achievement> {
                 }
                 return false;
             }
+        ),
+        new Achievement(
+            "That's not how a brain works",
+            "Deleting it was propably a better decision than creating it",
+            "Delete a .b file",
+            false,
+            (user: User) => {
+                return user.filesDeleted.includes(".b");
+            }
         )
     ];
 }

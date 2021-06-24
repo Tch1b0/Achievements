@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
+import { accomplishedAchievements } from "../achievements/accomplishedAchievements";
 import { Achievement } from "../achievements/Achievement";
-import { getAchievements } from "../achievements/achievements";
 import { getNonce } from "./getNonce";
 
 export class AchievementPanel {
@@ -157,9 +157,24 @@ export class AchievementPanel {
         const nonce = getNonce();
 
         let achievementsInText = "";
+        let explosion = `<div class="firework">
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        <div class="explode"></div>
+                        </div>`;
         for (let i = 0; i < achievements.length; i++) {
             let a = achievements[i];
-            achievementsInText += `<p class="achievement">${a.done ? "✔️" : "❌"}&emsp;<b>${a.name}</b>${a.done ? "&emsp;-&emsp;" + a.description : ""}</p><br>`;
+            achievementsInText += `<p class="achievement">${a.fresh ? explosion : ""}${a.done ? "✔️" : "❌"}&emsp;<b>${a.name}</b>${a.done ? "&emsp;-&emsp;" + a.description : ""}</p><br>`;
+            achievements[i].fresh = false;
         }
 
         return `<!DOCTYPE html>
@@ -172,7 +187,6 @@ export class AchievementPanel {
                 -->
                 <meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource
             }; script-src 'nonce-${nonce}';">
-                <script src="${scriptUri}"></script>
                 <link rel="stylesheet" href="${styleUri}">
                 <link rel="stylesheet" href="${stylesResetUri}">
                 <link rel="stylesheet" href="${stylesMainUri}">
@@ -181,11 +195,18 @@ export class AchievementPanel {
                 </script>
 			    </head>
                 <body>
-                    <h1 align="center">Achievements</h1>
+                    <h1 align="center" id="heading">Achievements</h1>
+                    <hr>
                     <br><br>
                     <div class="achievements">${achievementsInText}</div>
+                    <p class="accomplishedAchievements">
+                    
+                    <a class="count✔️">${accomplishedAchievements(achievements).length}</a>/<a class="countAll">${achievements.length}</a>
+                    </p>
                 </body>
                 <footer id="footer" align="center">If you want to support me, you can <a href="https://www.buymeacoffee.com/Tchibo">buy me a coffee</a> ☕ <br></footer>
+                <script src="${scriptUri}" nonce="${nonce}">
+                </script>
 			    </html>`;
     }
 }
