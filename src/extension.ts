@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
-import { User } from './User';
-import { getPart } from './utils';
+import { User } from './User/User';
+import { getExtension } from './getExtension';
 import { checkForCompletion } from './achievements/checkForCompletion';
 import { getAchievements } from './achievements/achievements';
 import { AchievementPanel } from './Panel/AchievementPanel';
+import { addOrAppend } from './User/addOrAppend';
 
 export function activate(context: vscode.ExtensionContext) {
 	var user = new User();
@@ -11,20 +12,24 @@ export function activate(context: vscode.ExtensionContext) {
 	var watcher = vscode.workspace.createFileSystemWatcher('**/*');
 
 	watcher.onDidCreate((e) => {
-		user.filesCreated.push(
-			getPart(e.fsPath, e.fsPath.includes(".") ? "." : "/")
+		console.log(e.fsPath);
+		user.filesCreated = addOrAppend(
+			user.filesCreated,
+			getExtension(e.fsPath, !e.fsPath.includes("."))
 		);
 		checkForCompletion(user, achievements, context);
 	});
 	watcher.onDidChange((e) => {
-		user.filesChanged.push(
-			getPart(e.fsPath, e.fsPath.includes(".") ? "." : "/")
+		user.filesChanged = addOrAppend(
+			user.filesChanged,
+			getExtension(e.fsPath, !e.fsPath.includes("."))
 		);
 		checkForCompletion(user, achievements, context);
 	});
 	watcher.onDidDelete((e) => {
-		user.filesDeleted.push(
-			getPart(e.fsPath, e.fsPath.includes(".") ? "." : "/")
+		user.filesDeleted = addOrAppend(
+			user.filesDeleted,
+			getExtension(e.fsPath, !e.fsPath.includes("."))
 		);
 		checkForCompletion(user, achievements, context);
 	});
