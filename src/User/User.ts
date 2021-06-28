@@ -1,6 +1,11 @@
 export class User {
-    charactersWritten!: number;
     filesCreated: Map<string, number> = new Map();
-    filesChanged: Map<string, number> = new Map();
     filesDeleted: Map<string, number> = new Map();
+
+    constructor(obj?: User | undefined) {
+        if (obj !== undefined) {
+            this.filesCreated = new Map(Object.entries(obj.filesCreated));
+            this.filesDeleted = new Map(Object.entries(obj.filesDeleted));
+        }
+    }
 }
