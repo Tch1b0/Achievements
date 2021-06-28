@@ -33,15 +33,6 @@ export function getAchievements(): Array<Achievement> {
             }
         ),
         new Achievement(
-            "Not your storage",
-            "These npm packages really require lots of space",
-            "Delete a node_modules directory",
-            false,
-            (user: User) => {
-                return user.filesDeleted.has("/node_modules");
-            }
-        ),
-        new Achievement(
             "That's not how a brain works",
             "Deleting it was propably a better decision than creating it",
             "Delete a .b file",
