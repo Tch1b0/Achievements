@@ -18,6 +18,10 @@
 			{
 				"command": "achievements.achievements",
 				"title": "Achievements"
+			},
+			{
+				"command": "achievements.reset",
+				"title": "Reset Achievements"
 			}
 		]
 	},

@@ -1,8 +1,8 @@
 import { User } from "../User/User";
 import { Achievement } from "./Achievement";
 
-export function getAchievements(): Array<Achievement> {
-    return [
+export function getAchievements(obj?: Array<Achievement> | undefined): Array<Achievement> {
+    let achievements = [
         new Achievement(
             "Welcome!",
             "Thank you for downloading the Achievements extension!",
@@ -55,4 +55,12 @@ export function getAchievements(): Array<Achievement> {
             }
         )
     ];
+    if (obj === undefined) { return achievements; }
+    achievements.forEach((achievement) => {
+        let item = obj.find((k) => k.name === achievement.name);
+        if (item !== undefined) {
+            achievement.done = item.done;
+        }
+    });
+    return achievements;
 }

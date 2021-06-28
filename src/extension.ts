@@ -9,23 +9,21 @@ import { StatusBar } from './StatusBar/StatusBar';
 import { Achievement } from './achievements/Achievement';
 
 export function activate(context: vscode.ExtensionContext) {
-	// load from storage
-	var user = context.globalState.get<User>("User") || new User();
-	var achievements = context.globalState.get<Array<Achievement>>("Achievements") || getAchievements();
+	// Sync these Keys
+	context.globalState.setKeysForSync(["User", "Achievements"]);
 
+	// load from storage
+	let user = new User(context.globalState.get<User>("User"));
+	let achievements = getAchievements(context.globalState.get<Array<Achievement>>("Achievements"));
+	console.log(context.globalState.get("User"));
+
+	// Initiate StatusBar
 	const statusBar = new StatusBar("Achievements", "achievements.achievements");
 	var watcher = vscode.workspace.createFileSystemWatcher('**/*');
 
 	watcher.onDidCreate((e) => {
 		user.filesCreated = addOrAppend(
 			user.filesCreated,
-			getExtension(e.fsPath, !e.fsPath.includes("."))
-		);
-		checkForCompletion(user, achievements, context, statusBar);
-	});
-	watcher.onDidChange((e) => {
-		user.filesChanged = addOrAppend(
-			user.filesChanged,
 			getExtension(e.fsPath, !e.fsPath.includes("."))
 		);
 		checkForCompletion(user, achievements, context, statusBar);
@@ -42,12 +40,23 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand("achievements.achievements", () => {
 		AchievementPanel.createOrShow(context.extensionUri, achievements, statusBar);
 	}));
+	context.subscriptions.push(vscode.commands.registerCommand("achievements.reset", async () => {
+		let answer = await vscode.window.showInformationMessage(
+			"Do you really want to reset your Achievements?",
+			"Yes",
+			"No"
+		);
+		if (answer === "Yes") {
+			AchievementPanel.kill();
+			achievements.forEach((achievement) => {
+				achievement.done = false;
+			});
+			checkForCompletion(user, achievements, context, statusBar);
+		}
+	}));
 
 	checkForCompletion(user, achievements, context, statusBar);
+
 }
 
-export function deactivate(context: vscode.ExtensionContext) {
-	context.globalState.update("User", context.workspaceState.get("User"));
-	context.globalState.update("Achievements", context.workspaceState.get("Achievements"));
-	context.globalState.setKeysForSync(["User", "Achievements"]);
-}
+export function deactivate(context: vscode.ExtensionContext) { }
