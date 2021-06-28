@@ -3,6 +3,7 @@
 	"displayName": "Achievements",
 	"description": "Get achievements while you work on your projects",
 	"version": "0.0.1",
+	"publisher": "tch1b0",
 	"engines": {
 		"vscode": "^1.57.0"
 	},
