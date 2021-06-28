@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { AchievementPanel } from '../Panel/AchievementPanel';
+import { StatusBar } from '../StatusBar/StatusBar';
 
 export class Achievement {
     name!: string;
@@ -17,15 +18,16 @@ export class Achievement {
         this.checkCondition = checkCondition;
     }
 
-    async finished(context: vscode.ExtensionContext, achievements: Array<Achievement>): Promise<void> {
+    async finished(context: vscode.ExtensionContext, achievements: Array<Achievement>, statusBar: StatusBar): Promise<void> {
         this.done = true;
         this.fresh = true;
-        let answer = await vscode.window.showInformationMessage(
-            `✔ ${this.name}`,
-            "Show Achievements"
-        );
-        if (answer === "Show Achievements") {
-            AchievementPanel.createOrShow(context.extensionUri, achievements);
-        }
+        statusBar.notify();
+        // let answer = await vscode.window.showInformationMessage(
+        //     `✔ ${this.name}`,
+        //     "Show Achievements"
+        // );
+        // if (answer === "Show Achievements") {
+        //     AchievementPanel.createOrShow(context.extensionUri, achievements, statusBar);
+        // }
     }
 }

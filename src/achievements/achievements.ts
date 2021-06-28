@@ -40,6 +40,19 @@ export function getAchievements(): Array<Achievement> {
             (user: User) => {
                 return user.filesDeleted.has(".b") || user.filesDeleted.has(".bf");
             }
+        ),
+        new Achievement(
+            "Time to personalize",
+            "This may be a pretty good idea",
+            "Create a file that ends with rc",
+            false,
+            (user: User) => {
+                for (let key of user.filesCreated.keys()) {
+                    console.log(key);
+                    if (key.endsWith("rc")) { return true; }
+                }
+                return false;
+            }
         )
     ];
 }
