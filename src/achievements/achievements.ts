@@ -1,4 +1,4 @@
-import { User } from "../User";
+import { User } from "../User/User";
 import { Achievement } from "./Achievement";
 
 export function getAchievements(): Array<Achievement> {
@@ -18,7 +18,7 @@ export function getAchievements(): Array<Achievement> {
             "Create a assembly file",
             false,
             (user: User) => {
-                return user.filesCreated.includes(".asm");
+                return user.filesCreated.has(".asm");
             }
         ),
         new Achievement(
@@ -27,21 +27,9 @@ export function getAchievements(): Array<Achievement> {
             "Create a python, ruby and html file",
             false,
             (user: User) => {
-                return user.filesCreated.includes(".html") && user.filesCreated.includes(".py") && user.filesCreated.includes(".rb");
-            }
-        ),
-        new Achievement(
-            "Not your storage",
-            "These npm packages really require lots of space",
-            "Delete a node_modules directory",
-            false,
-            (user: User) => {
-                for (let i = 0; i < user.filesDeleted.length; i++) {
-                    if (user.filesDeleted[i].endsWith("node_modules")) {
-                        return true;
-                    }
-                }
-                return false;
+                return (user.filesCreated.has(".html") &&
+                    user.filesCreated.has(".py") &&
+                    user.filesCreated.has(".rb"));
             }
         ),
         new Achievement(
@@ -50,7 +38,7 @@ export function getAchievements(): Array<Achievement> {
             "Delete a .b file",
             false,
             (user: User) => {
-                return user.filesDeleted.includes(".b");
+                return user.filesDeleted.has(".b");
             }
         )
     ];
