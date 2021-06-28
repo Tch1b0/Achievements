@@ -9,4 +9,6 @@ export function checkForCompletion(user: User, achievements: Array<Achievement>,
             achievement.finished(context, achievements, statusBar);
         }
     });
+    context.workspaceState.update("User", user);
+    context.workspaceState.update("Achievements", achievements);
 }

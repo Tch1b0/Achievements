@@ -6,10 +6,13 @@ import { getAchievements } from './achievements/achievements';
 import { AchievementPanel } from './Panel/AchievementPanel';
 import { addOrAppend } from './User/addOrAppend';
 import { StatusBar } from './StatusBar/StatusBar';
+import { Achievement } from './achievements/Achievement';
 
 export function activate(context: vscode.ExtensionContext) {
-	var user = new User();
-	var achievements = getAchievements();
+	// load from storage
+	var user = context.globalState.get<User>("User") || new User();
+	var achievements = context.globalState.get<Array<Achievement>>("Achievements") || getAchievements();
+
 	const statusBar = new StatusBar("Achievements", "achievements.achievements");
 	var watcher = vscode.workspace.createFileSystemWatcher('**/*');
 
@@ -43,4 +46,8 @@ export function activate(context: vscode.ExtensionContext) {
 	checkForCompletion(user, achievements, context, statusBar);
 }
 
-export function deactivate() { }
+export function deactivate(context: vscode.ExtensionContext) {
+	context.globalState.update("User", context.workspaceState.get("User"));
+	context.globalState.update("Achievements", context.workspaceState.get("Achievements"));
+	context.globalState.setKeysForSync(["User", "Achievements"]);
+}
