@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { accomplishedAchievements } from "../achievements/accomplishedAchievements";
 import { Achievement } from "../achievements/Achievement";
+import { StatusBar } from "../StatusBar/StatusBar";
 import { getNonce } from "./getNonce";
 
 export class AchievementPanel {
@@ -15,7 +16,9 @@ export class AchievementPanel {
     private readonly _extensionUri: vscode.Uri;
     private _disposables: vscode.Disposable[] = [];
 
-    public static createOrShow(extensionUri: vscode.Uri, achievements: Array<Achievement>) {
+    public static createOrShow(extensionUri: vscode.Uri, achievements: Array<Achievement>, statusBar: StatusBar) {
+        statusBar.update(accomplishedAchievements(achievements).length, achievements.length);
+
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
             : undefined;
