@@ -38,7 +38,7 @@ export function getAchievements(): Array<Achievement> {
             "Delete a .b file",
             false,
             (user: User) => {
-                return user.filesDeleted.has(".b");
+                return user.filesDeleted.has(".b") || user.filesDeleted.has(".bf");
             }
         )
     ];
