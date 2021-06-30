@@ -22,12 +22,12 @@ export class Achievement {
         this.done = true;
         this.fresh = true;
         statusBar.notify();
-        // let answer = await vscode.window.showInformationMessage(
-        //     `✔ ${this.name}`,
-        //     "Show Achievements"
-        // );
-        // if (answer === "Show Achievements") {
-        //     AchievementPanel.createOrShow(context.extensionUri, achievements, statusBar);
-        // }
+        let answer = await vscode.window.showInformationMessage(
+            `✔ ${this.name}`,
+            "Show Achievements"
+        );
+        if (answer === "Show Achievements") {
+            AchievementPanel.createOrShow(context.extensionUri, achievements, statusBar);
+        }
     }
 }
