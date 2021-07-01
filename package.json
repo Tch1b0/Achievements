@@ -4,6 +4,10 @@
 	"description": "Get achievements while you work on your projects",
 	"version": "0.0.1",
 	"publisher": "tch1b0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Tch1b0/Tch1b0/Achievements"
+	},
 	"engines": {
 		"vscode": "^1.57.0"
 	},
