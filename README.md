@@ -15,7 +15,7 @@ Ensure that you've read through the extensions guidelines and follow the best pr
 
 ## Installation
 The `Achievements` extension will be available in the Visual Studio Code extension store when the version `1.0.0` is released. <br>
-However, you still can download the extension like this: <br>
+However, you can download the extension like this: <br>
 
 1. Go to the latest release of this repository
 
