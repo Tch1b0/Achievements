@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// load from storage
 	let user = new User(context.globalState.get<User>("User"));
 	let achievements = getAchievements(context.globalState.get<Array<Achievement>>("Achievements"));
-	console.log(context.globalState.get("User"));
 
 	// Initiate StatusBar
 	const statusBar = new StatusBar("Achievements", "achievements.achievements");
@@ -51,6 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
 			achievements.forEach((achievement) => {
 				achievement.done = false;
 			});
+			user = new User();
 			checkForCompletion(user, achievements, context, statusBar);
 		}
 	}));

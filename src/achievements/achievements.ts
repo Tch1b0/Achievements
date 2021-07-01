@@ -48,7 +48,6 @@ export function getAchievements(obj?: Array<Achievement> | undefined): Array<Ach
             false,
             (user: User) => {
                 for (let key of user.filesCreated.keys()) {
-                    console.log(key);
                     if (key.endsWith("rc")) { return true; }
                 }
                 return false;
