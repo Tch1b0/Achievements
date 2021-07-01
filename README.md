@@ -2,7 +2,7 @@
 
 ![Demo](./media/Demo.gif)
 
-This is a [Visual Studio Code extension](https://code.visualstudio.com/), written in Typescript. <br>
+This is a [Visual Studio Code](https://code.visualstudio.com/) extension, written in Typescript. <br>
 `Achievements` was made to make coding in Visual Studio Code a bit more enjoyable, but mostly is just for fun.
 
 ## Features
