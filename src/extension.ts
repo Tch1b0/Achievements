@@ -9,7 +9,7 @@ import { StatusBar } from './StatusBar/StatusBar';
 import { Achievement } from './achievements/Achievement';
 
 export function activate(context: vscode.ExtensionContext) {
-	// Sync these Keys
+	// Sync the 'User' and 'Achievements' Key with the account
 	context.globalState.setKeysForSync(["User", "Achievements"]);
 
 	// load from storage
@@ -20,6 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const statusBar = new StatusBar("Achievements", "achievements.achievements");
 	var watcher = vscode.workspace.createFileSystemWatcher('**/*');
 
+	// Called when a file/directory is created
 	watcher.onDidCreate((e) => {
 		user.filesCreated = addOrAppend(
 			user.filesCreated,
@@ -27,6 +28,8 @@ export function activate(context: vscode.ExtensionContext) {
 		);
 		checkForCompletion(user, achievements, context, statusBar);
 	});
+
+	// Called whene a file/directory is deleted
 	watcher.onDidDelete((e) => {
 		user.filesDeleted = addOrAppend(
 			user.filesDeleted,

@@ -54,7 +54,10 @@ export function getAchievements(obj?: Array<Achievement> | undefined): Array<Ach
             }
         )
     ];
+    // If there is no initial object declared
     if (obj === undefined) { return achievements; }
+
+    // Set the achievements to the state they were in the save
     achievements.forEach((achievement) => {
         let item = obj.find((k) => k.name === achievement.name);
         if (item !== undefined) {
