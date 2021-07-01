@@ -1,3 +1,4 @@
+// Increment value in Map or create it
 export function addOrAppend(map: Map<string, number>, val: string): Map<string, number> {
     let num = map.get(val);
     if (num === undefined) {

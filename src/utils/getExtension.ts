@@ -1,3 +1,4 @@
+// return either the extension of the file or the name of the directory
 export function getExtension(name: string, isFolder: boolean = false): string {
     if (isFolder) {
         let splitted = name.split("/");
