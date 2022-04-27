@@ -11,7 +11,6 @@ So there are two ways you can use this extension:
 1. Just coding like you are used to and sometimes get a little notification, that you accomplished an achievement due to some action.
 
 2. Hunt the achievements and try to get them all.
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
 ## Installation
 The `Achievements` extension will be available in the Visual Studio Code extension store when the version `1.0.0` is released. <br>
